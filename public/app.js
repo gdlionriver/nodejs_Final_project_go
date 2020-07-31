@@ -1,6 +1,6 @@
 const studentsTable = document.querySelector('#stu-table');
 const form = document.querySelector("#add-students-form");
-// create element & render 
+// create element & render
 function renderStudents(doc){
     let td1 = document.createElement("td");
     let td2 = document.createElement("td");
@@ -14,15 +14,15 @@ function renderStudents(doc){
     tr.appendChild(td2);
     tr.appendChild(td3);
     
-    // delete 
+    // delete //刪除按鈕
     let cross = document.createElement('div');
     cross.textContent = 'x';
     tr.appendChild(cross);
     cross.addEventListener('click', (test) => {
-        test.stopPropagation();
+        test.stopPropagation();  //取消 重新整理頁面//這行不用懂為什麼
         let id = test.target.parentElement.getAttribute('data-id');
         console.log(id);
-        db.collection('ClassA').doc(id).delete();
+        db.collection('ClassA').doc(id).delete();//刪除DB資料
     });
     //
 
@@ -32,7 +32,7 @@ function renderStudents(doc){
 // getting data 
 db.collection('ClassA').get().then(data => {
     data.docs.forEach(doc => {
-        renderStudents(doc);
+        renderStudents(doc);//把 Array裡的每一個doc 渲染(render)成你要的表格
     });
 });
 // 

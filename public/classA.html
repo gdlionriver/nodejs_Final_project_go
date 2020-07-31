@@ -1,49 +1,114 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <h1>ClassA</h1>
-    <body>
-        <div class="content">
-            <form id="add-students-form">
-                <input type="text" name="name" placeholder="輸入 Student's name">
-                <input type="text" name="gender" placeholder="輸入 Student's gender">
-                <input type="text" name="age" placeholder="輸入 Student's age">
-                <button> Add a student </button> 
-            </form>
-            <table id="stu-table" cellpadding="10" border="1" width="100%">
-                　<tr>
-                　  <td>姓名</td>
-                　  <td>年齡</td>
-                    <td>性別</td>
-                　</tr>
-            </table>
-        </div>
-    </body>
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
 
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-        https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-firestore.js"></script>
-    <script>
-    // Your web app's Firebase configuration
-    var firebaseConfig = {
-        apiKey: "AIzaSyAuF4WNcgl6Q-Arfjr90fuq4nq7HCKDOgs",
-        authDomain: "myproject-2f2ea.firebaseapp.com",
-        databaseURL: "https://myproject-2f2ea.firebaseio.com",
-        projectId: "myproject-2f2ea",
-        storageBucket: "myproject-2f2ea.appspot.com",
-        messagingSenderId: "884104853559",
-        appId: "1:884104853559:web:edf6c329fa361914bae7b2",
-        measurementId: "G-VRE5GNZV0W"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
-    const db = firebase.firestore();
-    </script>
-    <script src="app.js"></script>
+<head>
+    <title>08-03Firebase</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<h1>ClassA</h1>
+
+<body>
+    <div class="content">
+        <form id="add-students-form">
+            <input type="text" name="name" placeholder="輸入 Student's name">
+            <input type="text" name="gender" placeholder="輸入 Student's gender">
+            <input type="text" name="age" placeholder="輸入 Student's age">
+            <button> Add a student </button>
+        </form>
+        <table id="stu-table" cellpadding="10" border="1" width="100%">
+            　<tr>
+                <td>姓名</td>
+                <td>年齡</td>
+                <td>性別</td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-firestore.js"></script>
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyB0e6UTGzCiluMbgfYtK6AmqhBBO8mCsaA",
+    authDomain: "test-813b9.firebaseapp.com",
+    databaseURL: "https://test-813b9.firebaseio.com",
+    projectId: "test-813b9",
+    storageBucket: "test-813b9.appspot.com",
+    messagingSenderId: "784213876112",
+    appId: "1:784213876112:web:86afa95261ea2f2b7d6715",
+    measurementId: "G-D92HR9T0MH"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+
+
+
+
+
+<script>
+    //資料庫連線
+    const db = firebase.firestore(); //db <==> database
+
+    //把資料取出來
+    //db.collection('ClassA').get() ：get 得到 promise ，將此份promise 命名為參數snapshot。是個物件，是個JSON。
+    //console.log(db.collection('ClassA').get()); //列印出 Promise pending
+    db.collection('ClassA').get().then((snapshot) => { // promise => pending -(.then)> fulfilled
+        //console.log(snapshot); 
+        //console.log(snapshot["docs"]); //列印出 snapshot JSON格式的 docs節點
+        //console.log(snapshot.docs);
+        snapshot.docs.forEach(doc => {
+            //console.log(doc.data());
+        }) 
+    });
+    //把資料取出來 結束
+
+    ////把資料存進去
+    ////新增
+    //let object1={
+    //    name: "Fiona",
+    //    age: 20,
+    //    gender: "female"
+    //}
+    ////db.collection('ClassA').add(object1);
+    ////新增 結束
+    //
+    ////新增、修改
+    //db.collection("ClassA").doc("student100").set({
+    //    name: "Luffy",
+    //    age: 23,
+    //    gender: "male"
+    //})
+    ////新增、修改 結束
+ 
+    //把資料刪除
+    db.collection('ClassA').get().then(data => {
+        var want_del = data.docs[0].id; //找到第一筆 id
+
+
+        //for(let i=0 ; i <0 ; i++){  //小心爆掉出錯
+        //    console.log(data.docs[i].id);
+        //}
+
+        data.docs.forEach(doc => {
+            console.log("id = ", doc.id); //找到 id
+        });
+
+        //db.collection('ClassA').doc("你要刪除的 id").delete();
+        ////db.collection('ClassA').doc(want_del).delete();
+    });
+    
+</script>
+
+
+
+<script src="app.js"></script>
+
 </html>
